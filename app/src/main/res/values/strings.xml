@@ -1,3 +1,33 @@
 <resources>
     <string name="app_name">FoodCalculator</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_register">Register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Not a valid password</string>
+    <string name="invalid_password_register">Password must contain at least 12 characters, one digit, one uppercase and one lowercase letter and a special character!</string>
+    <string name="login_failed">"Login failed, check username and password"</string>
+    <string name="not_registered">"Not registered? Create an account"</string>
+    <string name="account_created">"Account successfully created!"</string>
+    <string name="retry">"Retry"</string>
+
+    <string name="diaryButton">"Add diary entries"</string>3
+
+    <string name="log_out">"Do you wish to log out?"</string>
+
+    <string name="yes">"Yes"</string>
+    <string name="no">"No"</string>
+    
+    <string name="navigation_drawer_open">"Open navigation drawer"</string>
+    <string name="navigation_drawer_close">"Close navigation drawer"</string>
+
+    <string name="add_diary_entries">"Add diary entries"</string>
+    <string name="add_diary_food">"Add food"</string>
+    <string name="find_food">"Select a food"</string>
+
+
 </resources>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_baseline_person_24"
+            android:title="Profile" />
+        <item
+            android:id="@+id/nav_diary"
+            android:icon="@drawable/ic_baseline_menu_book_24"
+            android:title="Diary" />
+
+        <item
+            android:id="@+id/nav_calculator"
+            android:icon="@drawable/ic_baseline_calculate_24"
+            android:title="Calculator" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_baseline_settings_24"
+            android:title="Settings" />
+
+    </group>
+
+    <item android:title="SomethingAgain">
+        <menu>
+            <item
+                android:id="@+id/nav_something"
+                android:title="testing" />
+
+            <item
+                android:id="@+id/log_out"
+                android:icon="@drawable/ic_baseline_login_24"
+                android:title="Log out" />
+
+
+        </menu>
+
+    </item>
+
+</menu>
