@@ -1,1 +1,1 @@
-# FoodCalculatorApp
+# FoodDiaryApp
