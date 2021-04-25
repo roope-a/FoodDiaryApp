@@ -16,19 +16,6 @@ import com.example.foodcalculator.R;
 
 public class BaseFragment extends Fragment {
 
-//    @Override
-//    public void onCreate(@Nullable Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//
-//        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-//            @Override
-//            public void handleOnBackPressed() {
-//                getActivity().getSupportFragmentManager().popBackStack();
-//            }
-//        };
-//        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
-//    }
-
-    // TODO add something to remove the backstack when user logs out
+    // Well this never came in handy
 
 }

@@ -1,9 +1,5 @@
 package com.example.foodcalculator.ui.login;
 
-import android.app.Activity;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -19,18 +15,15 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.foodcalculator.MainActivity;
+import com.example.foodcalculator.fragments.MainActivity;
 import com.example.foodcalculator.R;
 import com.example.foodcalculator.data.DBLogin;
-import com.example.foodcalculator.ui.login.LoginViewModel;
-import com.example.foodcalculator.ui.login.LoginViewModelFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -87,17 +80,17 @@ public class LoginActivity extends AppCompatActivity {
         };
         usernameEditText.addTextChangedListener(afterTextChangedListener);
         passwordEditText.addTextChangedListener(afterTextChangedListener);
-        passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                /*if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString());
-                }*/
-                return false;
-            }
-        });
+//        passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                /*if (actionId == EditorInfo.IME_ACTION_DONE) {
+//                    loginViewModel.login(usernameEditText.getText().toString(),
+//                            passwordEditText.getText().toString());
+//                }*/
+//                return false;
+//            }
+//        });
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override

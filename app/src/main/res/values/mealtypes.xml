@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="mealtypes">
+        <item>Breakfast</item>
+        <item>Lunch</item>
+        <item>Dinner</item>
+        <item>Snack</item>
+        <item>Junkfood</item>
+        <item>Treats</item>
+    </string-array>
+
+    <string-array name="temp">
+        <item>Avocado dip</item>
+        <item>Bagels</item>
+        <item>Beef Frankfurter</item>
+        <item>Chicken Pot Pie</item>
+        <item>Cole Slaw</item>
+        <item>Eggs</item>
+        <item>Hazelnut Spread</item>
+        <item>Potato Chips</item>
+        <item>Soy Patties, Grilled</item>
+        <item>Truffles, Dark Chocolate</item>
+
+    </string-array>
+
+</resources>

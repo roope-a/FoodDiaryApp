@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.foodcalculator.R;
 
-public class SettingsFragment extends BaseFragment {
+public class AboutFragment extends BaseFragment {
 
     @Nullable
     @Override

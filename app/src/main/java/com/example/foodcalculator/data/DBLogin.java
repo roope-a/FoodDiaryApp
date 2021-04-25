@@ -39,7 +39,7 @@ public class DBLogin {
     {
         DatabaseHelper(Context context)
         {
-            super(context, context.getFilesDir().getPath()+DATABASE_NAME, null, DATABASE_VERSION);
+            super(context, context.getFilesDir().getPath()+"/"+DATABASE_NAME, null, DATABASE_VERSION);
 
         }
 
