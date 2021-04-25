@@ -52,42 +52,24 @@ public class MainActivityViewModel extends ViewModel {
         if (TextUtils.isEmpty(foodName)) {
             return false;
         }
-        else if (foodName.length() >= 2) {
-            return true;
-        } else {
-            return false;
-        }
+        else return foodName.length() >= 2;
     }
 
     public boolean isNutritionValid(double nutrition) {
         if (nutrition < 0) {
             return false;
         }
-        else if (nutrition >= 0) {
-            return true;
-        } else {
-            return false;
-        }
-        //return true;
+        else return nutrition >= 0;
     }
 
     public boolean isMealsizeValid(double mealsize) {
         if (mealsize < 0) {
             return false;
         }
-        else if (mealsize > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        else return mealsize > 0;
     }
 
     public boolean isMealtypeValid(String mealType) {
-
-        if (TextUtils.isEmpty(mealType)) {
-            return false;
-        } else {
-            return true;
-        }
+        return !TextUtils.isEmpty(mealType);
     }
 }

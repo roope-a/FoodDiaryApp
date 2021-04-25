@@ -1,5 +1,6 @@
 package com.example.foodcalculator.fragments;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -71,8 +73,10 @@ public class DiaryFragmentAdd extends BaseFragment {
         TextView onlineLookUp = view.findViewById(R.id.onlineLookUp);
 
         ExtendedFloatingActionButton fab = view.findViewById(R.id.addFoodButton);
+        fab.setEnabled(false);
 
         fab.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
 
@@ -80,6 +84,7 @@ public class DiaryFragmentAdd extends BaseFragment {
 
                     double cal = 0, fat = 0, sod = 0, car = 0, sug = 0, fib = 0, pro = 0, size = 0;
 
+                    //Get all the text field input
                     if (!isEmptyAutoTextView(caloriesText)) {
                         cal = Double.parseDouble(caloriesText.getText().toString());
                     } if (!isEmptyAutoTextView(fatsText)) {
@@ -99,19 +104,18 @@ public class DiaryFragmentAdd extends BaseFragment {
                     }
                     entryManager.writeEntry(new Food(foodMenu.getText().toString(),
                             mealtypeMenu.getText().toString(), cal, fat, sod,car,sug,fib,pro),size);
-                    getParentFragmentManager().popBackStack(); ;
+                    getParentFragmentManager().popBackStack();
                 }
-
             }
         });
-        fab.setEnabled(false);
-
 
         onlineLookUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //Start the loading animation
                 loadingScreen.startLoading();
+
+                // Async http request
                 HttpHandler httpHandler = new HttpHandler(new AsyncResponse() {
                     @Override
                     public void processFinish(String response) {
@@ -135,6 +139,7 @@ public class DiaryFragmentAdd extends BaseFragment {
                     }
                 });
 
+                //Check if user entered meal size, can be used for API query
                 if (!isEmptyAutoTextView(mealsizeText)) {
                     httpHandler.execute(mealsizeText.getText().toString()+"grams "+foodMenu.getText().toString());
                 } else {
@@ -146,7 +151,8 @@ public class DiaryFragmentAdd extends BaseFragment {
         List<String[]> foodsList;
         ArrayList<String> foodArray = new ArrayList<>();
         Map<String, Food> nutritionalMap = new HashMap<>();
-        
+
+        //Load autocomplete texts and matching food nutritional values into map
         try {
             foodsList = foodListManager.read();
             for (int i = 0; i < foodsList.size(); i++) {
@@ -163,8 +169,8 @@ public class DiaryFragmentAdd extends BaseFragment {
 
         List<String> mealtypes = Arrays.asList(getResources().getStringArray(R.array.mealtypes));
 
-//        TESTING ONLY
-//        CREATES A DEFAULT LIST
+//        DEMO
+//        CREATES A DEMO LIST FOR AUTOCOMPLETE TEXT FIELD
 
 //        String[] tempfoods = getResources().getStringArray(R.array.temp);
 
@@ -176,12 +182,12 @@ public class DiaryFragmentAdd extends BaseFragment {
 //                    ThreadLocalRandom.current().nextInt(200,400+1));
 //        }
 
-//        END TESTING
+//        END DEMO
 
-        ArrayAdapter<String> adapter_meal = new ArrayAdapter<String>(view.getContext(), R.layout.dropdown_menu, mealtypes);
+        ArrayAdapter<String> adapter_meal = new ArrayAdapter<>(view.getContext(), R.layout.dropdown_menu, mealtypes);
         mealtypeMenu.setText(R.string.mealtype_default);
         mealtypeMenu.setAdapter(adapter_meal);
-        ArrayAdapter<String> adapter_food = new ArrayAdapter<String>(view.getContext(), R.layout.dropdown_menu, foodArray);
+        ArrayAdapter<String> adapter_food = new ArrayAdapter<>(view.getContext(), R.layout.dropdown_menu, foodArray);
         foodMenu.setAdapter(adapter_food);
 
         mainActivityViewModel.getDiaryAddState().observe(getViewLifecycleOwner(), new Observer<DiaryAddState>() {
@@ -191,7 +197,7 @@ public class DiaryFragmentAdd extends BaseFragment {
                     return;
                 }
                 fab.setEnabled(diaryAddState.isDataValid());
-                // Couldnt get error messages working
+                // Couldn't get error messages working properly
 //
 //                if (diaryAddState.getFoodNameError() != null) {
 //                    textInputLayout.setError(getString(diaryAddState.getFoodNameError()));
@@ -240,6 +246,7 @@ public class DiaryFragmentAdd extends BaseFragment {
 
                 double cal = 0, fat = 0, sod = 0, car = 0, sug = 0, fib = 0, pro = 0, size = 0;
 
+                //Get all the text field input
                 if (!isEmptyAutoTextView(caloriesText)) {
                     cal = Double.parseDouble(caloriesText.getText().toString());
                 } if (!isEmptyAutoTextView(fatsText)) {
@@ -258,10 +265,12 @@ public class DiaryFragmentAdd extends BaseFragment {
                     size = Double.parseDouble(mealsizeText.getText().toString());
                 }
 
+                //Update when data has changed
                 mainActivityViewModel.diaryAddDataChanged(foodMenu.getText().toString(),
                         mealtypeMenu.getText().toString(), cal, fat, sod, car, sug, fib, pro, size);
             }
         };
+        //Watching all the text fields for input
         foodMenu.addTextChangedListener(textWatcher);
         caloriesText.addTextChangedListener(textWatcher);
         fatsText.addTextChangedListener(textWatcher);

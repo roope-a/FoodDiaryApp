@@ -59,7 +59,7 @@ public class HttpHandler extends AsyncTask<String, Void, String> {
 
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
 
-            String stringBuffer = null;
+            String stringBuffer;
             String string = "";
             while (true) {
                 if ((stringBuffer = bufferedReader.readLine()) == null) break;

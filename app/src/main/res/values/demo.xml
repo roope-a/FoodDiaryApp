@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Used to create a demo list -->
+
+    <string-array name="temp">
+        <item>Avocado dip</item>
+        <item>Bagels</item>
+        <item>Beef Frankfurter</item>
+        <item>Chicken Pot Pie</item>
+        <item>Cole Slaw</item>
+        <item>Eggs</item>
+        <item>Hazelnut Spread</item>
+        <item>Potato Chips</item>
+        <item>Soy Patties, Grilled</item>
+        <item>Truffles, Dark Chocolate</item>
+    </string-array>
+
+</resources>

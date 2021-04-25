@@ -25,6 +25,7 @@ public class FoodListManager {
 
     final String CSV_NAME = "foods.csv";
 
+    //Create the file if it doesn't exist
     public void doesExist() {
         final String filepath = context.getFilesDir().getPath()+"/"+CSV_NAME;
         File file = new File(filepath);
@@ -40,15 +41,14 @@ public class FoodListManager {
                 printWriter.close();
             }
         } catch (Exception e) {
-            //TODO error handling
             e.printStackTrace();
         }
 
     }
 
     public List<String[]> read() {
-        List<String[]> resultList = new ArrayList<String[]>();
-        InputStream inputStream = null;
+        List<String[]> resultList = new ArrayList<>();
+        InputStream inputStream;
         try {
             inputStream = new FileInputStream(context.getFilesDir().getPath()+"/"+CSV_NAME);
         } catch (FileNotFoundException e) {
@@ -77,9 +77,11 @@ public class FoodListManager {
         return resultList;
     }
 
-//    public String getFoodName() {
-//
-//    }
+
+    /*
+    * Unimplemented feature, wanted for the user to be able to input foods to autocomplete aswell
+    *
+    * */
 
     public void write(String foodName, String mealType, double calories, double fat, double sodium, double carbs, double sugar, double fiber, double protein) {
 

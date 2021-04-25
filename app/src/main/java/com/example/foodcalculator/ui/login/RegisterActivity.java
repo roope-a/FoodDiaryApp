@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -36,7 +37,11 @@ public class RegisterActivity extends AppCompatActivity {
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
         final Button registerButton = findViewById(R.id.login);
-        final ProgressBar loadingProgressBar = findViewById(R.id.loading);
+
+        // Update username if user tried to login without an account, for easier registeration
+        Intent intent = getIntent();
+        String username = intent.getStringExtra("username");
+        usernameEditText.setText(username);
 
         DBLogin db = new DBLogin(this);
 
@@ -46,6 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if (loginFormState == null) {
                     return;
                 }
+                // Check to see if user has filled fields with valid info
                 registerButton.setEnabled(loginFormState.isDataValid());
                 if (loginFormState.getUsernameError() != null) {
                     usernameEditText.setError(getString(loginFormState.getUsernameError()));
@@ -53,26 +59,6 @@ public class RegisterActivity extends AppCompatActivity {
                 if (loginFormState.getPasswordError() != null) {
                     passwordEditText.setError(getString(loginFormState.getPasswordError()));
                 }
-            }
-        });
-
-        registerViewModel.getLoginResult().observe(this, new Observer<LoginResult>() {
-            @Override
-            public void onChanged(@Nullable LoginResult loginResult) {
-                if (loginResult == null) {
-                    return;
-                }
-                loadingProgressBar.setVisibility(View.GONE);
-                if (loginResult.getError() != null) {
-                    showLoginFailed(loginResult.getError());
-                }
-                if (loginResult.getSuccess() != null) {
-                    updateUiWithUser(loginResult.getSuccess());
-                }
-                setResult(Activity.RESULT_OK);
-
-                //Complete and destroy register activity once successful
-                finish();
             }
         });
 
@@ -89,13 +75,14 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+                //After input check if data has changed
                 registerViewModel.loginDataChanged(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
             }
         };
+        //Implement listeners
         usernameEditText.addTextChangedListener(afterTextChangedListener);
         passwordEditText.addTextChangedListener(afterTextChangedListener);
-
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,20 +94,15 @@ public class RegisterActivity extends AppCompatActivity {
                     db.AddUser(username, password);
                     Toast.makeText(RegisterActivity.this, R.string.account_created, Toast.LENGTH_SHORT).show();
                     db.close();
+
+                    // Destroy activity
                     finish();
                 } catch (Exception e) {
-
+                    e.getStackTrace();
                 }
             }
         });
 
     }
 
-    private void updateUiWithUser(LoggedInUserView model) {
-
-    }
-
-    private void showLoginFailed(@StringRes Integer errorString) {
-
-    }
 }

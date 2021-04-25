@@ -15,27 +15,10 @@ import java.util.regex.Pattern;
 public class LoginViewModel extends ViewModel {
 
     private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
-    private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
 
     LiveData<LoginFormState> getLoginFormState() {
         return loginFormState;
     }
-
-    LiveData<LoginResult> getLoginResult() {
-        return loginResult;
-    }
-
-//    public void login(String username, String password) {
-//        // can be launched in a separate asynchronous job
-//        Result<LoggedInUser> result = loginRepository.login(username, password);
-//
-//        if (result instanceof Result.Success) {
-//            LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
-//            loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName())));
-//        } else {
-//            loginResult.setValue(new LoginResult(R.string.login_failed));
-//        }
-//    }
 
     public void loginDataChanged(String username, String password) {
         if (!isUserNameValid(username)) {
@@ -48,6 +31,7 @@ public class LoginViewModel extends ViewModel {
     }
 
     // A placeholder username validation check
+    // Not using emails, so not gonna change it
     private boolean isUserNameValid(String username) {
 
         if (username == null) {
@@ -60,11 +44,9 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
-
+    // Password match check
     private boolean isPasswordValid(String password) {
-
         Pattern passwordPattern = Pattern.compile("^(?=.*\\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[?=.*?[#?!@$%^&*-]]).{12,}$");
-
         return !TextUtils.isEmpty(password) && passwordPattern.matcher(password).matches();
     }
 }

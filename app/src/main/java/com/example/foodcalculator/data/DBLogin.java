@@ -24,7 +24,7 @@ public class DBLogin {
                     + "username text not null, "
                     + "password text not null);";
 
-    private Context context = null;
+    private Context context;
 
     private DatabaseHelper  DBHelper;
     private SQLiteDatabase db;
@@ -80,17 +80,22 @@ public class DBLogin {
 
     }
 
-    public boolean Login(String username, String password) throws SQLException
+    public LoginReturn Login(String username, String password) throws SQLException
     {
-//        Cursor mCursor = db.rawQuery("SELECT * FROM " + DATABASE_TABLE + " WHERE username=? AND password=?", new String[]{username,password});
-//        if (mCursor != null) {
-//            if(mCursor.getCount() > 0)
-//            {
+        Cursor mCursor = db.rawQuery("SELECT * FROM " + DATABASE_TABLE + " WHERE username=? AND password=?", new String[]{username,password});
+        if (mCursor != null) {
+            if(mCursor.getCount() > 0)
+            {
 //                return true;
-//            }
-//        }
+                mCursor.moveToFirst();
+                LoginReturn _return = new LoginReturn(mCursor.getString(mCursor.getColumnIndex(KEY_ROWID)), mCursor.getString(mCursor.getColumnIndex(KEY_USERNAME)), true);
+                mCursor.close();
+                return _return;
+            }
+        }
 //        return false;
-        return true;
+        return new LoginReturn("","",false);
+//        return true;
     }
 
 }

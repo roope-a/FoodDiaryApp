@@ -51,8 +51,11 @@
     <string name="nutritional_info">Nutritional info:</string>
     <string name="fooddiary_nav">FoodDiary</string>
     <string name="profile">Profile</string>
-    <string name="diary">Diary</string>
+    <string name="home">Today</string>
     <string name="about">About</string>
     <string name="log_out_drawer">Log out</string>
+    <string name="diary_caps_text">Calories today</string>
+    <string name="diary">Diary</string>
+    <string name="loadingMessage">Just give it a second</string>
 
 </resources>

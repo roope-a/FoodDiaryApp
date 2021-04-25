@@ -6,11 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -18,26 +19,30 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.example.foodcalculator.R;
 import com.example.foodcalculator.fragments.entry.manager.EntryManager;
 import com.example.foodcalculator.fragments.entry.manager.FoodListManager;
+import com.example.foodcalculator.ui.login.LoginActivity;
 import com.google.android.material.navigation.NavigationView;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private MainActivityViewModel mainActivityViewModel;
-
     private DrawerLayout drawer;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        /* Saving id and username for safekeeping.
+        * Allows nav menu username textfield to persist through closing the app.
+        * Same for the id that's required to access the correct userinfo file.
+        * */
+        SharedPreferences preferences = getSharedPreferences("user",MODE_PRIVATE);
+        String username = preferences.getString("username", "");
+        String id = preferences.getString("id", "");
 
         setContentView(R.layout.activity_main);
 
@@ -46,12 +51,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         EntryManager entryManager = new EntryManager(getApplicationContext());
         entryManager.doesExist();
-//        entryManager.writeEntry(new Food("Eggs Benedict", "Breakfast",
-//                    ThreadLocalRandom.current().nextInt(200,400+1),  ThreadLocalRandom.current().nextInt(200,400+1),
-//                    ThreadLocalRandom.current().nextInt(200,400+1), ThreadLocalRandom.current().nextInt(200,400+1),
-//                    ThreadLocalRandom.current().nextInt(200,400+1), ThreadLocalRandom.current().nextInt(200,400+1),
-//                    ThreadLocalRandom.current().nextInt(200,400+1)));
-
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -59,6 +58,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View headerView = navigationView.getHeaderView(0);
+        TextView username_nav = headerView.findViewById(R.id.username_here);
+        username_nav.setText(username);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -75,8 +78,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
+        // Handle navigation between fragments and log out
         int id = item.getItemId();
-
         if (id == R.id.nav_profile) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new ProfileFragment()).addToBackStack(null).commit();
@@ -87,46 +90,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         else if (id == R.id.nav_calculator) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new CalculatorFragment()).addToBackStack(null).commit();
+                    new DiaryListFragment()).addToBackStack(null).commit();
         }
         else if (id == R.id.nav_settings) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new AboutFragment()).addToBackStack(null).commit();
         }
-        else if (id == R.id.nav_something) {
-            // TODO do shit, maybe i dunno
-        }
-        else if (id == R.id.log_out) {
-            // TODO do shit to logout
 
+        else if (id == R.id.log_out) {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 
-                    // TODO add the logging out
+                    //Clear the remember me file so user gets prompted to login
+                    SharedPreferences preferences = getSharedPreferences("rememberMe",MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("remember", "false").apply();
 
-                    Toast.makeText(MainActivity.this, "Hey", Toast.LENGTH_SHORT).show();
-
+                    //Open login activity
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
             });
             builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-
-                    // TODO do we actually do anything ehre?
-
                 }
             });
-
             builder.setMessage(R.string.log_out).create().show();
-
         }
-
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
+    //Check drawer status
     @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -135,7 +134,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
-
 
     // Copy paste modular solution for solving touch focus problems with text fields
     @Override
