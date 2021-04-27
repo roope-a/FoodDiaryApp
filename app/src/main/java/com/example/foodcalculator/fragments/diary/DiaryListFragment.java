@@ -1,4 +1,4 @@
-package com.example.foodcalculator.fragments;
+package com.example.foodcalculator.fragments.diary;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -21,6 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 import com.example.foodcalculator.R;
+import com.example.foodcalculator.fragments.BaseFragment;
 import com.example.foodcalculator.fragments.entry.manager.EntryManager;
 import com.example.foodcalculator.fragments.entry.manager.Food;
 

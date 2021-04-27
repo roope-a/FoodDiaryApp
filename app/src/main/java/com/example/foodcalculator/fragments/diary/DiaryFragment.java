@@ -1,6 +1,6 @@
-package com.example.foodcalculator.fragments;
+package com.example.foodcalculator.fragments.diary;
 
-import android.os.AsyncTask;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,22 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.foodcalculator.R;
+import com.example.foodcalculator.fragments.BaseFragment;
 import com.example.foodcalculator.fragments.entry.manager.EntryManager;
 import com.example.foodcalculator.fragments.entry.manager.Food;
-import com.example.foodcalculator.httpHandler.AsyncResponse;
-import com.example.foodcalculator.httpHandler.HttpHandler;
-import com.facebook.stetho.common.ArrayListAccumulator;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -31,18 +26,10 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.FileNotFoundException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -64,10 +51,6 @@ public class DiaryFragment extends BaseFragment implements View.OnClickListener 
         mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
 
         TextView caloriesToday = view.findViewById(R.id.caloriesToday);
-        TextView caloriesText = view.findViewById(R.id.caloriesText);
-
-        caloriesToday.setTextSize(10 * getResources().getDisplayMetrics().density);
-        caloriesText.setTextSize(10 * getResources().getDisplayMetrics().density);
 
         FloatingActionButton fab = view.findViewById(R.id.addButton);
         fab.setOnClickListener(this);
@@ -120,6 +103,7 @@ public class DiaryFragment extends BaseFragment implements View.OnClickListener 
         pieChart.getLegend().setEnabled(false);
         pieChart.getDescription().setEnabled(false);
         pieChart.setMinOffset(10);
+        pieChart.setHoleColor(0);
 
         pieChart.animateY(1400, Easing.EaseInOutQuad);
         addDataSet(pieChart, calories , mealtypeName);
@@ -137,6 +121,7 @@ public class DiaryFragment extends BaseFragment implements View.OnClickListener 
         PieDataSet pieDataSet = new PieDataSet(yEntry, "Calories per mealtype");
         pieDataSet.setSliceSpace(10);
         pieDataSet.setValueTextSize(20);
+        pieDataSet.setValueTextColor(Color.WHITE);
         pieDataSet.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {

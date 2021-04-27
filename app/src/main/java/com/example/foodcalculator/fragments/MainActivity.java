@@ -15,7 +15,6 @@ import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,6 +23,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.foodcalculator.R;
+import com.example.foodcalculator.fragments.diary.DiaryFragment;
+import com.example.foodcalculator.fragments.diary.DiaryListFragment;
 import com.example.foodcalculator.fragments.entry.manager.EntryManager;
 import com.example.foodcalculator.fragments.entry.manager.Food;
 import com.example.foodcalculator.fragments.entry.manager.FoodListManager;
@@ -32,16 +33,12 @@ import com.example.foodcalculator.fragments.entry.manager.Queue;
 import com.example.foodcalculator.httpHandler.AsyncResponse;
 import com.example.foodcalculator.httpHandler.HttpHandler;
 import com.example.foodcalculator.ui.login.LoginActivity;
-import com.facebook.stetho.common.StringUtil;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Arrays;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.regex.Pattern;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {

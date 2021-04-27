@@ -30,21 +30,19 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
-    // A placeholder username validation check
-    // Not using emails, so not gonna change it
     private boolean isUserNameValid(String username) {
 
         if (username == null) {
             return false;
         }
-        if (username.contains("@")) {
-            return Patterns.EMAIL_ADDRESS.matcher(username).matches();
-        } else {
+//        if (username.contains("@")) {
+//            return Patterns.EMAIL_ADDRESS.matcher(username).matches();
+//        }
+        else {
             return !username.trim().isEmpty();
         }
     }
 
-    // Password match check
     private boolean isPasswordValid(String password) {
         Pattern passwordPattern = Pattern.compile("^(?=.*\\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[?=.*?[#?!@$%^&*-]]).{12,}$");
         return !TextUtils.isEmpty(password) && passwordPattern.matcher(password).matches();

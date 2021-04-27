@@ -1,4 +1,4 @@
-package com.example.foodcalculator.fragments;
+package com.example.foodcalculator.fragments.diary;
 
 import android.app.Activity;
 import android.app.AlertDialog;

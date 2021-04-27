@@ -1,0 +1,4 @@
+<resources>
+	<dimen name="calories_today">25sp</dimen>
+	<dimen name="text_calories">23sp</dimen>
+</resources>

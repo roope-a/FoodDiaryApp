@@ -1,5 +1,6 @@
-package com.example.foodcalculator.fragments;
+package com.example.foodcalculator.fragments.diary;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -11,8 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +21,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.foodcalculator.R;
+import com.example.foodcalculator.fragments.BaseFragment;
 import com.example.foodcalculator.fragments.entry.manager.EntryManager;
 import com.example.foodcalculator.fragments.entry.manager.Food;
 import com.example.foodcalculator.fragments.entry.manager.FoodListManager;
@@ -30,7 +30,6 @@ import com.example.foodcalculator.httpHandler.HttpHandler;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,7 +39,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class DiaryFragmentAdd extends BaseFragment {
 
