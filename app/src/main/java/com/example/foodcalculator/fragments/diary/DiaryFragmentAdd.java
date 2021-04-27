@@ -170,11 +170,11 @@ public class DiaryFragmentAdd extends BaseFragment {
             throw new RuntimeException("Error: "+e);
         }
 
-        ArrayAdapter<String> adapter_meal = new ArrayAdapter<>(view.getContext(), R.layout.dropdown_menu, mealtypes);
+        ArrayAdapter<String> adapter_meal = new ArrayAdapter<>(view.getContext(), R.layout.autocomplete_custom, mealtypes);
         mealtypeMenu.setText(R.string.mealtype_default);
         mealtypeMenu.setAdapter(adapter_meal);
 
-        ArrayAdapter<String> adapter_food = new ArrayAdapter<>(view.getContext(), R.layout.dropdown_menu, foodArray);
+        ArrayAdapter<String> adapter_food = new ArrayAdapter<>(view.getContext(), R.layout.autocomplete_custom, foodArray);
         foodMenu.setAdapter(adapter_food);
 
         mainActivityViewModel.getDiaryAddState().observe(getViewLifecycleOwner(), new Observer<DiaryAddState>() {
