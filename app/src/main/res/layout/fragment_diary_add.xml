@@ -52,16 +52,22 @@
                     android:hint="@string/find_food"
                     />
 
-                <TextView
+                <Button
+                    android:layout_width="match_parent"
                     android:id="@+id/onlineLookUp"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="8dp"
-                    android:text="@string/online_lookup"
-                    android:textSize="16sp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:textColor="@color/design_default_color_primary_variant" />
+                    android:text="@string/online_lookup" />
+
+<!--                <TextView-->
+<!--                    android:id="@+id/onlineLookUp"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:paddingTop="8dp"-->
+<!--                    -->
+<!--                    android:textSize="16sp"-->
+<!--                    android:clickable="true"-->
+<!--                    android:focusable="true"-->
+<!--                    android:textColor="@color/design_default_color_primary_variant" />-->
 
             </com.google.android.material.textfield.TextInputLayout>
 

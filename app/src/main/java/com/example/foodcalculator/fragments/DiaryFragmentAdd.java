@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +30,7 @@ import com.example.foodcalculator.httpHandler.HttpHandler;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 
-
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -70,7 +71,7 @@ public class DiaryFragmentAdd extends BaseFragment {
         AutoCompleteTextView proteinText = view.findViewById(R.id.protein);
         AutoCompleteTextView mealsizeText = view.findViewById(R.id.mealSize);
         LoadingScreen loadingScreen = new LoadingScreen(getActivity());
-        TextView onlineLookUp = view.findViewById(R.id.onlineLookUp);
+        Button onlineLookUp = view.findViewById(R.id.onlineLookUp);
 
         ExtendedFloatingActionButton fab = view.findViewById(R.id.addFoodButton);
         fab.setEnabled(false);
@@ -120,20 +121,22 @@ public class DiaryFragmentAdd extends BaseFragment {
                     @Override
                     public void processFinish(String response) {
                         try {
-                            JSONObject jsonObject = new JSONObject(response);
+                            JSONObject jsonObject = new JSONObject(response).getJSONArray("items").getJSONObject(0);
                             loadingScreen.dismissLoading();
-                            caloriesText.setText(jsonObject.getJSONArray("items").getJSONObject(0).getString("calories"));
-                            fatsText.setText(jsonObject.getJSONArray("items").getJSONObject(0).getString("fat_total_g"));
-                            double tempSodium = Double.parseDouble(jsonObject.getJSONArray("items").getJSONObject(0).getString("sodium_mg"));
+                            caloriesText.setText(jsonObject.getString("calories"));
+                            fatsText.setText(jsonObject.getString("fat_total_g"));
+                            double tempSodium = Double.parseDouble(jsonObject.getString("sodium_mg"));
                             sodiumText.setText(String.valueOf(tempSodium/1000));
-                            carbsText.setText(jsonObject.getJSONArray("items").getJSONObject(0).getString("carbohydrates_total_g"));
-                            sugarsText.setText(jsonObject.getJSONArray("items").getJSONObject(0).getString("sugar_g"));
-                            fibersText.setText(jsonObject.getJSONArray("items").getJSONObject(0).getString("fiber_g"));
-                            proteinText.setText(jsonObject.getJSONArray("items").getJSONObject(0).getString("protein_g"));
-                            mealsizeText.setText(jsonObject.getJSONArray("items").getJSONObject(0).getString("serving_size_g"));
+                            carbsText.setText(jsonObject.getString("carbohydrates_total_g"));
+                            sugarsText.setText(jsonObject.getString("sugar_g"));
+                            fibersText.setText(jsonObject.getString("fiber_g"));
+                            proteinText.setText(jsonObject.getString("protein_g"));
+                            mealsizeText.setText(jsonObject.getString("serving_size_g"));
+                            loadingScreen.dismissLoading();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            loadingScreen.dismissLoading();
                             new AlertDialog.Builder(getActivity()).setMessage("Sorry. We couldn't find what you were looking for :(").create().show();
                         }
                     }
@@ -152,41 +155,27 @@ public class DiaryFragmentAdd extends BaseFragment {
         ArrayList<String> foodArray = new ArrayList<>();
         Map<String, Food> nutritionalMap = new HashMap<>();
 
+        List<String> mealtypes = Arrays.asList(getResources().getStringArray(R.array.mealtypes));
+
         //Load autocomplete texts and matching food nutritional values into map
         try {
             foodsList = foodListManager.read();
             for (int i = 0; i < foodsList.size(); i++) {
-                String[] temp = Arrays.toString(foodsList.get(i)).replace("[", "").replace("]", "").split(";");
-                nutritionalMap.put(temp[0], new Food(temp[0], temp[1], Double.parseDouble(temp[2]), Double.parseDouble(temp[3]),
-                        Double.parseDouble(temp[4]), Double.parseDouble(temp[5]), Double.parseDouble(temp[6]),
-                        Double.parseDouble(temp[7]), Double.parseDouble(temp[8])));
-                foodArray.add(temp[0]);
+                String[] tempList = Arrays.toString(foodsList.get(i)).replace("[", "").replace("]", "").split(";");
+                nutritionalMap.put(tempList[0], new Food(tempList[0], Double.parseDouble(tempList[1]), Double.parseDouble(tempList[2]), Double.parseDouble(tempList[3]),
+                        Double.parseDouble(tempList[4]), Double.parseDouble(tempList[5]), Double.parseDouble(tempList[6]),
+                        Double.parseDouble(tempList[7])));
+                foodArray.add(tempList[0]);
             }
 
         } catch (Exception e) {
             throw new RuntimeException("Error: "+e);
         }
 
-        List<String> mealtypes = Arrays.asList(getResources().getStringArray(R.array.mealtypes));
-
-//        DEMO
-//        CREATES A DEMO LIST FOR AUTOCOMPLETE TEXT FIELD
-
-//        String[] tempfoods = getResources().getStringArray(R.array.temp);
-
-//        for (int i = 0; i < 10; i++) {
-//            foodListManager.write(tempfoods[i], mealtypes[ThreadLocalRandom.current().nextInt(0,6+1)],
-//                    ThreadLocalRandom.current().nextInt(200,400+1),  ThreadLocalRandom.current().nextInt(200,400+1),
-//                    ThreadLocalRandom.current().nextInt(200,400+1), ThreadLocalRandom.current().nextInt(200,400+1),
-//                    ThreadLocalRandom.current().nextInt(200,400+1), ThreadLocalRandom.current().nextInt(200,400+1),
-//                    ThreadLocalRandom.current().nextInt(200,400+1));
-//        }
-
-//        END DEMO
-
         ArrayAdapter<String> adapter_meal = new ArrayAdapter<>(view.getContext(), R.layout.dropdown_menu, mealtypes);
         mealtypeMenu.setText(R.string.mealtype_default);
         mealtypeMenu.setAdapter(adapter_meal);
+
         ArrayAdapter<String> adapter_food = new ArrayAdapter<>(view.getContext(), R.layout.dropdown_menu, foodArray);
         foodMenu.setAdapter(adapter_food);
 
@@ -197,7 +186,8 @@ public class DiaryFragmentAdd extends BaseFragment {
                     return;
                 }
                 fab.setEnabled(diaryAddState.isDataValid());
-                // Couldn't get error messages working properly
+
+//                Couldn't get error messages working properly, wanted to prompt required fields with errors
 //
 //                if (diaryAddState.getFoodNameError() != null) {
 //                    textInputLayout.setError(getString(diaryAddState.getFoodNameError()));
@@ -265,12 +255,12 @@ public class DiaryFragmentAdd extends BaseFragment {
                     size = Double.parseDouble(mealsizeText.getText().toString());
                 }
 
-                //Update when data has changed
+                //Check whethet to enable add food button valid when data has changed
                 mainActivityViewModel.diaryAddDataChanged(foodMenu.getText().toString(),
                         mealtypeMenu.getText().toString(), cal, fat, sod, car, sug, fib, pro, size);
             }
         };
-        //Watching all the text fields for input
+        //Listening to all the text fields for input
         foodMenu.addTextChangedListener(textWatcher);
         caloriesText.addTextChangedListener(textWatcher);
         fatsText.addTextChangedListener(textWatcher);

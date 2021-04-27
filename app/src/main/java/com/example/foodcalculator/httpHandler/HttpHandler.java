@@ -30,18 +30,15 @@ import java.net.URLConnection;
 
 public class HttpHandler extends AsyncTask<String, Void, String> {
 
-    //Callback interface
     public AsyncResponse delegate;
     public HttpHandler(AsyncResponse asyncResponse) {
         delegate = asyncResponse;
     }
 
-    String result;
+    private String result;
 
     @Override
     protected String doInBackground(String... params) {
-
-//        String query = "3lb carrots and a chicken sandwich";
 
         String query = params[0];
         URL url = null;
@@ -53,7 +50,6 @@ public class HttpHandler extends AsyncTask<String, Void, String> {
         }
 
         try {
-
             URLConnection urlConn = url.openConnection();
             urlConn.setRequestProperty("X-Api-Key", "uUc45GZTz4+oXqqtfVyyTw==ODGjuTjXcqJ9ddaQ");
 
@@ -69,7 +65,6 @@ public class HttpHandler extends AsyncTask<String, Void, String> {
             result = string;
         } catch (IOException e) {
             e.printStackTrace();
-            result = e.toString();
         }
 
         return null;
@@ -77,7 +72,6 @@ public class HttpHandler extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String response) {
-//        System.out.println(result);
         delegate.processFinish(result);
     }
 }

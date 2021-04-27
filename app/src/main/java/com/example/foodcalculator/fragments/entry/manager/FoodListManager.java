@@ -14,6 +14,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class FoodListManager {
 
@@ -23,27 +24,29 @@ public class FoodListManager {
         this.context = context;
     }
 
-    final String CSV_NAME = "foods.csv";
+    final private String CSV_NAME = "foods.csv";
 
     //Create the file if it doesn't exist
-    public void doesExist() {
+    public boolean doesExist() {
         final String filepath = context.getFilesDir().getPath()+"/"+CSV_NAME;
         File file = new File(filepath);
-        try {
+        boolean val = false;
             if (!file.exists()) {
+                try {
+                    val = true;
+                    FileWriter fileWriter = new FileWriter(file, true);
+                    BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                    PrintWriter printWriter = new PrintWriter(bufferedWriter);
 
-                FileWriter fileWriter = new FileWriter(file, true);
-                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-                PrintWriter printWriter = new PrintWriter(bufferedWriter);
-
-                printWriter.println("foodname,mealType,calories,fat,sodium,carbs,sugar,fiber,protein");
-
-                printWriter.close();
+                    printWriter.println("foodname;calories;fat;sodium;carbs;sugar;fiber;protein");
+                    printWriter.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                val = false;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+            return val;
     }
 
     public List<String[]> read() {
@@ -83,28 +86,42 @@ public class FoodListManager {
     *
     * */
 
-    public void write(String foodName, String mealType, double calories, double fat, double sodium, double carbs, double sugar, double fiber, double protein) {
+    public void write(Food food) {
 
         PrintWriter printWriter;
         final String filepath = context.getFilesDir().getPath()+"/"+CSV_NAME;
         File file = new File(filepath);
 
         try {
-            Character sep = ';';
+            char sep = ';';
             FileWriter fileWriter = new FileWriter(file, true);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
             printWriter = new PrintWriter(bufferedWriter);
-            // "foodname,ID,mealType,calories,fat,sodium,carbs,sugar,fiber,protein\n"
 
-            printWriter.println(foodName+sep+mealType+sep+calories+sep+fat+sep+sodium+sep+carbs+sep+sugar+sep+fiber+sep+protein);
+            //        printWriter.println(foodName+ sep+
+//                    calories+ sep+
+//                    fat+ sep+
+//                    sodium+ sep+
+//                    carbs+ sep+
+//                    sugar+ sep+
+//                    fiber+ sep
+//                    +protein);
+
+            printWriter.println(food.getFoodName() +sep+
+                    food.getCalories() +sep+
+                    food.getFat() +sep+
+                    food.getSodium() +sep+
+                    food.getCarbs() +sep+
+                    food.getSugar() +sep+
+                    food.getFiber() +sep+
+                    food.getProtein());
 
             printWriter.close();
 
         } catch (FileNotFoundException e) {
-            throw new RuntimeException("Error closing input stream: "+e);
+            throw new RuntimeException(e);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 }

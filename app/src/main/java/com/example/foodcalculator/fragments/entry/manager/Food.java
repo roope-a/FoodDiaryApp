@@ -15,8 +15,21 @@ public class Food {
     private double protein;
     private LocalDate localDate;
 
-    //Constructor used for most actions, like writing the file
+    //Constructor used for most things
     public Food (String foodName, String mealType, double calories, double fat, double sodium, double carbs, double sugar, double fiber, double protein) {
+        this.foodName = foodName;
+        this.mealType = mealType;
+        this.calories = calories;
+        this.fat = fat;
+        this.sodium = sodium;
+        this.carbs = carbs;
+        this.sugar = sugar;
+        this.fiber = fiber;
+        this.protein = protein;
+    }
+
+    //Used for autotextcomplete list
+    public Food (String foodName, double calories, double fat, double sodium, double carbs, double sugar, double fiber, double protein) {
         this.foodName = foodName;
         this.mealType = mealType;
         this.calories = calories;

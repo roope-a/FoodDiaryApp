@@ -35,7 +35,7 @@
     <string name="invalid_nutrition">Must be at least 0</string>
     <string name="invalid_mealtype">Not a valid meal type</string>
 
-    <string name="online_lookup"><u>"Not in here? Enter meal size and try online lookup"</u></string>
+    <string name="online_lookup"><u>"Try online lookup"</u></string>
 
     <string name="mealtype_default">"Breakfast"</string>
     <string name="calories">Calories</string>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="preset">
+        <item>Avocado dip</item>
+        <item>Apple</item>
+        <item>Bagels</item>
+        <item>Banana</item>
+        <item>Beef</item>
+        <item>Chicken pot pie</item>
+        <item>Cole Slaw</item>
+        <item>Eggs</item>
+        <item>Hazelnut</item>
+        <item>Potato chips</item>
+        <item>Orange</item>
+        <item>Dark chocolate</item>
+        <item>Ketchup</item>
+        <item>Milk</item>
+        <item>Coca Cola</item>
+        <item>Spaghetti</item>
+        <item>Honey</item>
+        <item>Tea</item>
+        <item>Coffee</item>
+        <item>Pasta</item>
+        <item>Pizza</item>
+        <item>Pepperoni pizza</item>
+        <item>Pancakes</item>
+        <item>French fries</item>
+        <item>Tacos</item>
+        <item>Kiwi</item>
+        <item>Broccoli</item>
+        <item>Yogurt</item>
+        <item>Cereal</item>
+        <item>Carrot</item>
+        <item>Rice</item>
+        <item>Cheese</item>
+        <item>Kidney beans</item>
+        <item>Black beans</item>
+        <item>Rye bread</item>
+        <item>Bread</item>
+        <item>Lemon</item>
+        <item>Lime</item>
+        <item>Tofu</item>
+        <item>Minced meat</item>
+        <item>Zucchini</item>
+        <item>Eggplant</item>
+        <item>Salad</item>
+        <item>Mustard</item>
+
+    </string-array>
+
+</resources>

@@ -16,11 +16,6 @@ public class MainActivityViewModel extends ViewModel {
 
     LiveData<DiaryAddState> getDiaryAddState() {return diaryAddState;}
 
-
-//    LiveData<DiaryAddState> getLoginFormState() {
-//        return DiaryAddState;
-//    }
-
     public void diaryAddDataChanged(String foodName, String mealtype,double calories, double fats, double sodium, double carbs, double sugars, double fibers, double protein, double grams) {
 
         if (!isFoodNameValid(foodName)) {
