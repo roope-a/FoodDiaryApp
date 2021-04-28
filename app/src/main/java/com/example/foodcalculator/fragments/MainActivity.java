@@ -63,9 +63,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         entryManager.doesExist();
 
         FoodListManager foodListManager = new FoodListManager(getApplicationContext());
-//        boolean val = foodListManager.doesExist();
-
-//        System.out.println(foodListManager.doesExist());
 
         if (foodListManager.doesExist()) {
 
